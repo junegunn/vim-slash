@@ -1,7 +1,8 @@
 vim-slash
 =========
 
-vim-slash provides a set of mappings for enhancing search experience in Vim.
+vim-slash provides a set of mappings for enhancing in-buffer search experience
+in Vim.
 
 - Automatically clears search highlight when cursor is moved
 - Improved star-search (visual-mode, highlighting without moving)
