@@ -20,8 +20,8 @@
 " OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 " THE SOFTWARE.
 
-function! s:wrap(seq)
-  if !get(s:, 'search', 0)
+function! s:wrap(seq, ...)
+  if a:0 && !get(s:, 'search', 0)
     return a:seq
   endif
   silent! autocmd! slash
@@ -69,7 +69,7 @@ noremap <expr> / <sid>set(1, '/')
 noremap <expr> ? <sid>set(1, '?')
 noremap <expr> : <sid>set(0, ':')
 
-cmap <expr> <cr> <sid>wrap("\<cr>")
+cmap <expr> <cr> <sid>wrap("\<cr>", 1)
 map  <expr> n    <sid>wrap('n')
 map  <expr> N    <sid>wrap('N')
 map  <expr> gd   <sid>wrap('gd')
