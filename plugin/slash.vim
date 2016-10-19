@@ -21,6 +21,9 @@
 " THE SOFTWARE.
 
 function! s:wrap(seq)
+  if !get(s:, 'search', 0)
+    return a:seq
+  endif
   silent! autocmd! slash
   set hlsearch
   return a:seq."\<plug>(slash-trailer)"
@@ -49,6 +52,11 @@ function! s:trailer()
   return ''
 endfunction
 
+function! s:set(bool, char)
+  let s:search = a:bool
+  return a:char
+endfunction
+
 function! SlashEscape(backward)
   return '\V'.substitute(escape(@", '\' . (a:backward ? '?' : '/')), "\n", '\\n', 'g')
 endfunction
@@ -56,6 +64,10 @@ endfunction
 noremap  <expr> <plug>(slash-trailer) <sid>trailer()
 cnoremap        <plug>(slash-cr)      <cr>
 noremap         <plug>(slash-prev)    <c-o>
+
+noremap <expr> / <sid>set(1, '/')
+noremap <expr> ? <sid>set(1, '?')
+noremap <expr> : <sid>set(0, ':')
 
 cmap <expr> <cr> <sid>wrap("\<cr>")
 map  <expr> n    <sid>wrap('n')
