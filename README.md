@@ -34,7 +34,24 @@ I don't give a damn][damn].
 Customization
 -------------
 
+#### `zz` after search
+
+Places the current match at the center of the window.
+
 ```vim
-" zz after search
-map <plug>(slash-after) zz
+noremap <plug>(slash-after) zz
+```
+
+#### Blinking line after search
+
+```vim
+function! s:flash()
+  set cursorline!
+  redraw
+  sleep 20m
+  set cursorline!
+  return ''
+endfunction
+
+noremap <expr> <plug>(slash-after) <sid>flash()
 ```

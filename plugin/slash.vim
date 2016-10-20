@@ -50,14 +50,15 @@ function! s:trailer()
       let seq .= -sdiff."\<c-y>"
     endif
   endif
-  return seq . maparg("<plug>(slash-after)", mode())
+  let after = len(maparg("<plug>(slash-after)", mode())) ? "\<plug>(slash-after)" : ''
+  return seq . after
 endfunction
 
 function! SlashEscape(backward)
   return '\V'.substitute(escape(@", '\' . (a:backward ? '?' : '/')), "\n", '\\n', 'g')
 endfunction
 
-noremap  <expr> <plug>(slash-trailer) <sid>trailer()
+map      <expr> <plug>(slash-trailer) <sid>trailer()
 cnoremap        <plug>(slash-cr)      <cr>
 noremap         <plug>(slash-prev)    <c-o>
 
