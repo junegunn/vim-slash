@@ -30,3 +30,11 @@ I don't give a damn][damn].
 [ob]:   https://github.com/junegunn/vim-oblique
 [pcl]:  https://github.com/junegunn/vim-pseudocl
 [damn]: https://en.wikipedia.org/wiki/Frankly,_my_dear,_I_don%27t_give_a_damn
+
+Customization
+-------------
+
+```vim
+" zz after search
+map <plug>(slash-after) zz
+```

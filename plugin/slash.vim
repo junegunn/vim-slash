@@ -50,7 +50,7 @@ function! s:trailer()
       let seq .= -sdiff."\<c-y>"
     endif
   endif
-  return seq
+  return seq . maparg("<plug>(slash-after)", mode())
 endfunction
 
 function! SlashEscape(backward)
