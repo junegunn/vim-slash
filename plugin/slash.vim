@@ -54,7 +54,7 @@ function! s:trailer()
   return seq . after
 endfunction
 
-function! SlashEscape(backward)
+function! s:escape(backward)
   return '\V'.substitute(escape(@", '\' . (a:backward ? '?' : '/')), "\n", '\\n', 'g')
 endfunction
 
@@ -71,5 +71,5 @@ map  <expr> *    <sid>wrap(<sid>immobile('*'))
 map  <expr> #    <sid>wrap(<sid>immobile('#'))
 map  <expr> g*   <sid>wrap(<sid>immobile('g*'))
 map  <expr> g#   <sid>wrap(<sid>immobile('g#'))
-xmap <expr> *    <sid>wrap(<sid>immobile("y/\<c-r>=SlashEscape(0)\<plug>(slash-cr)\<plug>(slash-cr)"))
-xmap <expr> #    <sid>wrap(<sid>immobile("y?\<c-r>=SlashEscape(1)\<plug>(slash-cr)\<plug>(slash-cr)"))
+xmap <expr> *    <sid>wrap(<sid>immobile("y/\<c-r>=<sid>escape(0)\<plug>(slash-cr)\<plug>(slash-cr)"))
+xmap <expr> #    <sid>wrap(<sid>immobile("y?\<c-r>=<sid>escape(1)\<plug>(slash-cr)\<plug>(slash-cr)"))
