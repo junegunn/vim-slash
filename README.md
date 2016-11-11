@@ -59,25 +59,35 @@ noremap <expr> <plug>(slash-after) <sid>flash()
 #### Non-blocking blinking using Vim 8 timers
 
 ```vim
-function! s:blink(ticks, delay)
-  let s:blink = { 'ticks': a:ticks, 'delay': a:delay }
+function! s:blink(times, delay)
+  let s:blink = { 'ticks': 2 * a:times, 'delay': a:delay }
+
   function! s:blink.tick(_)
     let self.ticks -= 1
     let active = self == s:blink && self.ticks > 0
-    if has_key(self, 'id')
-      call matchdelete(remove(self, 'id'))
-    elseif active && &hlsearch
+
+    if !self.clear() && active && &hlsearch
       let [line, col] = [line('.'), col('.')]
-      let self.id = matchadd('IncSearch',
+      let w:blink_id = matchadd('IncSearch',
             \ printf('\%%%dl\%%>%dc\%%<%dc', line, max([0, col-2]), col+2))
     endif
     if active
       call timer_start(self.delay, self.tick)
     endif
   endfunction
+
+  function! s:blink.clear()
+    if exists('w:blink_id')
+      call matchdelete(w:blink_id)
+      unlet w:blink_id
+      return 1
+    endif
+  endfunction
+
+  call s:blink.clear()
   call s:blink.tick(0)
   return ''
 endfunction
 
-noremap <expr> <plug>(slash-after) <sid>blink(4, 50)
+noremap <expr> <plug>(slash-after) <sid>blink(2, 50)
 ```
