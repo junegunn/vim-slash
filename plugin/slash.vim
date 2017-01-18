@@ -54,13 +54,23 @@ function! s:trailer()
   return seq . after
 endfunction
 
+function! s:trailer_on_leave()
+  augroup slash
+    autocmd!
+    autocmd InsertLeave * call <sid>trailer()
+  augroup END
+  return ''
+endfunction
+
 function! s:escape(backward)
   return '\V'.substitute(escape(@", '\' . (a:backward ? '?' : '/')), "\n", '\\n', 'g')
 endfunction
 
 map      <expr> <plug>(slash-trailer) <sid>trailer()
+imap     <expr> <plug>(slash-trailer) <sid>trailer_on_leave()
 cnoremap        <plug>(slash-cr)      <cr>
 noremap         <plug>(slash-prev)    <c-o>
+inoremap        <plug>(slash-prev)    <nop>
 
 cmap <expr> <cr> <sid>wrap("\<cr>")
 map  <expr> n    <sid>wrap('n')
