@@ -77,9 +77,21 @@ map  <expr> n    <sid>wrap('n')
 map  <expr> N    <sid>wrap('N')
 map  <expr> gd   <sid>wrap('gd')
 map  <expr> gD   <sid>wrap('gD')
-map  <expr> *    <sid>wrap(<sid>immobile('*'))
-map  <expr> #    <sid>wrap(<sid>immobile('#'))
-map  <expr> g*   <sid>wrap(<sid>immobile('g*'))
-map  <expr> g#   <sid>wrap(<sid>immobile('g#'))
-xmap <expr> *    <sid>wrap(<sid>immobile("y/\<c-r>=<sid>escape(0)\<plug>(slash-cr)\<plug>(slash-cr)"))
-xmap <expr> #    <sid>wrap(<sid>immobile("y?\<c-r>=<sid>escape(1)\<plug>(slash-cr)\<plug>(slash-cr)"))
+
+let immobile = get(g:, 'slash_immobile', 1)
+
+if immobile == 1
+  map  <expr> *    <sid>wrap(<sid>immobile('*'))
+  map  <expr> #    <sid>wrap(<sid>immobile('#'))
+  map  <expr> g*   <sid>wrap(<sid>immobile('g*'))
+  map  <expr> g#   <sid>wrap(<sid>immobile('g#'))
+  xmap <expr> *    <sid>wrap(<sid>immobile("y/\<c-r>=<sid>escape(0)\<plug>(slash-cr)\<plug>(slash-cr)"))
+  xmap <expr> #    <sid>wrap(<sid>immobile("y?\<c-r>=<sid>escape(1)\<plug>(slash-cr)\<plug>(slash-cr)"))
+else
+  map  <expr> *    <sid>wrap('*')
+  map  <expr> #    <sid>wrap('#')
+  map  <expr> g*   <sid>wrap('g*')
+  map  <expr> g#   <sid>wrap('g#')
+  xmap <expr> *    <sid>wrap("y/\<c-r>=<sid>escape(0)\<plug>(slash-cr)\<plug>(slash-cr)")
+  xmap <expr> #    <sid>wrap("y?\<c-r>=<sid>escape(1)\<plug>(slash-cr)\<plug>(slash-cr)")
+endif
