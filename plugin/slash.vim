@@ -66,6 +66,36 @@ function! s:escape(backward)
   return '\V'.substitute(escape(@", '\' . (a:backward ? '?' : '/')), "\n", '\\n', 'g')
 endfunction
 
+function! slash#blink(times, delay)
+  let s:blink = { 'ticks': 2 * a:times, 'delay': a:delay }
+
+  function! s:blink.tick(_)
+    let self.ticks -= 1
+    let active = self == s:blink && self.ticks > 0
+
+    if !self.clear() && active && &hlsearch
+      let [line, col] = [line('.'), col('.')]
+      let w:blink_id = matchadd('IncSearch',
+            \ printf('\%%%dl\%%>%dc\%%<%dc', line, max([0, col-2]), col+2))
+    endif
+    if active
+      call timer_start(self.delay, self.tick)
+    endif
+  endfunction
+
+  function! s:blink.clear()
+    if exists('w:blink_id')
+      call matchdelete(w:blink_id)
+      unlet w:blink_id
+      return 1
+    endif
+  endfunction
+
+  call s:blink.clear()
+  call s:blink.tick(0)
+  return ''
+endfunction
+
 map      <expr> <plug>(slash-trailer) <sid>trailer()
 imap     <expr> <plug>(slash-trailer) <sid>trailer_on_leave()
 cnoremap        <plug>(slash-cr)      <cr>

@@ -42,52 +42,13 @@ Places the current match at the center of the window.
 noremap <plug>(slash-after) zz
 ```
 
-#### Blinking line after search
+#### Blinking cursor after search using Vim 8 timer
 
 ```vim
-function! s:flash()
-  set cursorline!
-  redraw
-  sleep 20m
-  set cursorline!
-  return ''
-endfunction
-
-noremap <expr> <plug>(slash-after) <sid>flash()
+if has('timers')
+  " Blink 2 times with 50ms interval
+  noremap <expr> <plug>(slash-after) slash#blink(2, 50)
+endif
 ```
 
-#### Non-blocking blinking using Vim 8 timers
-
-```vim
-function! s:blink(times, delay)
-  let s:blink = { 'ticks': 2 * a:times, 'delay': a:delay }
-
-  function! s:blink.tick(_)
-    let self.ticks -= 1
-    let active = self == s:blink && self.ticks > 0
-
-    if !self.clear() && active && &hlsearch
-      let [line, col] = [line('.'), col('.')]
-      let w:blink_id = matchadd('IncSearch',
-            \ printf('\%%%dl\%%>%dc\%%<%dc', line, max([0, col-2]), col+2))
-    endif
-    if active
-      call timer_start(self.delay, self.tick)
-    endif
-  endfunction
-
-  function! s:blink.clear()
-    if exists('w:blink_id')
-      call matchdelete(w:blink_id)
-      unlet w:blink_id
-      return 1
-    endif
-  endfunction
-
-  call s:blink.clear()
-  call s:blink.tick(0)
-  return ''
-endfunction
-
-noremap <expr> <plug>(slash-after) <sid>blink(2, 50)
-```
+You can prepend `zz` to the expression: `'zz'.slash#blink(2, 50)`
