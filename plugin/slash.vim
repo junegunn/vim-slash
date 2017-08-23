@@ -30,19 +30,19 @@ function! s:wrap(seq)
 endfunction
 
 function! s:immobile(seq)
-  if exists('b:repeated_move')
+  if exists('b:slash_repeated_move')
     return a:seq
   endif
 
   let s:winline = winline()
-  let b:repeated_move = 1
+  let b:slash_repeated_move = 1
   return a:seq."\<plug>(slash-prev)"
 endfunction
 
 function! s:trailer()
   augroup slash
     autocmd!
-    autocmd CursorMoved,CursorMovedI * set nohlsearch | unlet! b:repeated_move | autocmd! slash
+    autocmd CursorMoved,CursorMovedI * set nohlsearch | unlet! b:slash_repeated_move | autocmd! slash
   augroup END
 
   let seq = foldclosed('.') != -1 ? 'zo' : ''
