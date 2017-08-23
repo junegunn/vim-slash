@@ -42,7 +42,7 @@ endfunction
 function! s:trailer()
   augroup slash
     autocmd!
-    autocmd CursorMoved,CursorMovedI * set nohlsearch | unlet b:repeated_move | autocmd! slash
+    autocmd CursorMoved,CursorMovedI * set nohlsearch | unlet! b:repeated_move | autocmd! slash
   augroup END
 
   let seq = foldclosed('.') != -1 ? 'zo' : ''
