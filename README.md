@@ -16,6 +16,14 @@ Using [vim-plug](https://github.com/junegunn/vim-plug):
 Plug 'junegunn/vim-slash'
 ```
 
+Configuration
+-------------
+Enable highlighting *with* moving:
+
+```vim
+let g:slash_immobile = 0
+```
+
 Comparison with vim-oblique
 ---------------------------
 
