@@ -40,7 +40,7 @@ function! s:trailer()
     autocmd CursorMoved,CursorMovedI * set nohlsearch | autocmd! slash
   augroup END
 
-  let seq = foldclosed('.') != -1 ? 'zo' : ''
+  let seq = foldclosed('.') != -1 ? 'zv' : ''
   if exists('s:winline')
     let sdiff = winline() - s:winline
     unlet s:winline
