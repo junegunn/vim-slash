@@ -21,6 +21,7 @@
 " THE SOFTWARE.
 
 function! s:wrap(seq)
+  let s:save_reg = @"
   if mode() == 'c' && stridx('/?', getcmdtype()) < 0
     return a:seq
   endif
@@ -63,7 +64,12 @@ function! s:trailer_on_leave()
 endfunction
 
 function! s:escape(backward)
-  return '\V'.substitute(escape(@", '\' . (a:backward ? '?' : '/')), "\n", '\\n', 'g')
+  let command = '\V'.substitute(escape(@", '\' . (a:backward ? '?' : '/')), "\n", '\\n', 'g')
+  if exists('s:save_reg')
+    let @" = s:save_reg
+    unlet! s:save_reg
+  endif
+  return command
 endfunction
 
 function! slash#blink(times, delay)
