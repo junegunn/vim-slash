@@ -104,7 +104,6 @@ imap     <expr> <plug>(slash-trailer) <sid>trailer_on_leave()
 cnoremap        <plug>(slash-cr)      <cr>
 noremap         <plug>(slash-prev)    <c-o>
 inoremap        <plug>(slash-prev)    <nop>
-noremap         <plug>(slash-nop)     <nop>
 noremap!        <plug>(slash-nop)     <nop>
 
 cmap <expr> <cr> <sid>wrap("\<cr>")
