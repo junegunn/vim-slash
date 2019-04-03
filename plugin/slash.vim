@@ -81,7 +81,7 @@ function! slash#blink(times, delay)
     if active
       call timer_start(self.delay, self.tick)
       if has('nvim')
-        call feedkeys("\<plug>(slash-nop)", 'n')
+        call feedkeys("\<plug>(slash-nop)")
       endif
     endif
   endfunction
@@ -104,6 +104,8 @@ imap     <expr> <plug>(slash-trailer) <sid>trailer_on_leave()
 cnoremap        <plug>(slash-cr)      <cr>
 noremap         <plug>(slash-prev)    <c-o>
 inoremap        <plug>(slash-prev)    <nop>
+noremap         <plug>(slash-nop)     <nop>
+noremap!        <plug>(slash-nop)     <nop>
 
 cmap <expr> <cr> <sid>wrap("\<cr>")
 map  <expr> n    <sid>wrap('n')
