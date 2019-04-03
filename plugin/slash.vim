@@ -81,7 +81,7 @@ function! slash#blink(times, delay)
     if active
       call timer_start(self.delay, self.tick)
       if has('nvim')
-        call feedkeys("\<plug>(slash-nop)", 'n')
+        call feedkeys("\<plug>(slash-nop)")
       endif
     endif
   endfunction
