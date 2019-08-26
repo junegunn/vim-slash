@@ -102,7 +102,7 @@ endfunction
 map      <expr> <plug>(slash-trailer) <sid>trailer()
 imap     <expr> <plug>(slash-trailer) <sid>trailer_on_leave()
 cnoremap        <plug>(slash-cr)      <cr>
-noremap         <plug>(slash-prev)    <c-o>
+noremap         <plug>(slash-prev)    ``
 inoremap        <plug>(slash-prev)    <nop>
 noremap!        <plug>(slash-nop)     <nop>
 
