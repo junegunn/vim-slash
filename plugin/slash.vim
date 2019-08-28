@@ -31,6 +31,7 @@ endfunction
 
 function! s:immobile(seq)
   let s:winline = winline()
+  let s:pos = getpos('.')
   return a:seq."\<plug>(slash-prev)"
 endfunction
 
@@ -60,6 +61,10 @@ function! s:trailer_on_leave()
     autocmd InsertLeave * call <sid>trailer()
   augroup END
   return ''
+endfunction
+
+function! s:prev()
+  return getpos('.') == s:pos ? '' : '``'
 endfunction
 
 function! s:escape(backward)
@@ -102,7 +107,7 @@ endfunction
 map      <expr> <plug>(slash-trailer) <sid>trailer()
 imap     <expr> <plug>(slash-trailer) <sid>trailer_on_leave()
 cnoremap        <plug>(slash-cr)      <cr>
-noremap         <plug>(slash-prev)    ``
+noremap  <expr> <plug>(slash-prev)    <sid>prev()
 inoremap        <plug>(slash-prev)    <nop>
 noremap!        <plug>(slash-nop)     <nop>
 
