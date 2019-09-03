@@ -30,6 +30,9 @@ function! s:wrap(seq)
 endfunction
 
 function! s:immobile(seq)
+  if get(g:, 'slash#disable_immobilize', 0)
+    return a:seq
+  endif
   let s:winline = winline()
   let s:pos = getpos('.')
   return a:seq."\<plug>(slash-prev)"
