@@ -30,7 +30,7 @@ function! s:wrap(seq)
 endfunction
 
 function! s:immobile(seq)
-  let s:winline = winline()
+  let s:topline = winsaveview()['topline']
   let s:pos = getpos('.')
   return a:seq."\<plug>(slash-prev)"
 endfunction
@@ -42,13 +42,13 @@ function! s:trailer()
   augroup END
 
   let seq = foldclosed('.') != -1 ? 'zv' : ''
-  if exists('s:winline')
-    let sdiff = winline() - s:winline
-    unlet s:winline
+  if exists('s:topline')
+    let sdiff = winsaveview()['topline'] - s:topline
+    unlet s:topline
     if sdiff > 0
-      let seq .= sdiff."\<c-e>"
+      let seq .= sdiff."\<c-y>"
     elseif sdiff < 0
-      let seq .= -sdiff."\<c-y>"
+      let seq .= -sdiff."\<c-e>"
     endif
   endif
   let after = len(maparg("<plug>(slash-after)", mode())) ? "\<plug>(slash-after)" : ''
